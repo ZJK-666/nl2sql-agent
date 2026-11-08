@@ -1,0 +1,167 @@
+<html style="margin:0;padding:0;">
+<title>智能问数 · 流水线流程图</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", -apple-system, sans-serif;
+    background: linear-gradient(160deg, #f0f4f8 0%, #e8eef5 100%);
+    margin: 0; padding: 32px 16px; color: #1f2937;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  h1 { text-align: center; font-size: 26px; margin: 0 0 6px; color: #0f172a; }
+  .sub { text-align: center; color: #64748b; font-size: 14px; margin-bottom: 28px; }
+
+  .flow { display: flex; flex-direction: column; align-items: center; }
+
+  /* 节点卡片 */
+  .node {
+    width: 300px; border-radius: 14px; padding: 14px 18px; text-align: center;
+    background: #fff; box-shadow: 0 6px 18px rgba(15,23,42,.10);
+    border: 1px solid rgba(15,23,42,.06);
+  }
+  .node .en { font-size: 15px; font-weight: 700; font-family: Consolas, monospace; }
+  .node .cn { font-size: 13px; margin-top: 4px; opacity: .85; }
+
+  .pill {
+    width: 120px; text-align: center; padding: 10px; border-radius: 999px;
+    color: #fff; font-weight: 700; box-shadow: 0 6px 16px rgba(15,23,42,.18);
+  }
+  .start { background: linear-gradient(135deg,#334155,#0f172a); }
+  .end   { background: linear-gradient(135deg,#0f766e,#115e59); }
+
+  /* 各阶段配色 */
+  .c-blue   { border-top: 4px solid #3b82f6; }
+  .c-blue   .en { color: #1d4ed8; }
+  .c-green  { border-top: 4px solid #10b981; }
+  .c-green  .en { color: #047857; }
+  .c-purple { border-top: 4px solid #8b5cf6; }
+  .c-purple .en { color: #6d28d9; }
+  .c-orange { border-top: 4px solid #f59e0b; }
+  .c-orange .en { color: #b45309; }
+  .c-indigo { border-top: 4px solid #6366f1; }
+  .c-indigo .en { color: #4338ca; }
+  .c-red    { border-top: 4px solid #ef4444; }
+  .c-red    .en { color: #b91c1c; }
+
+  /* 竖线 + 箭头 */
+  .vline { width: 2px; height: 26px; background: #94a3b8; }
+  .tip { width: 0; height: 0; border-left: 6px solid transparent;
+         border-right: 6px solid transparent; border-top: 8px solid #94a3b8; }
+
+  /* 并行组 */
+  .parallel { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; width: 100%; }
+  .branch { display: flex; flex-direction: column; align-items: center; }
+  .branch .node { width: 200px; }
+  .manifold { width: 70%; height: 2px; background: #94a3b8; }
+  .branch-top { width: 2px; height: 18px; background: #94a3b8; }
+  .branch-bottom { width: 2px; height: 18px; background: #94a3b8; }
+
+  /* 条件分叉 */
+  .fork { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; width: 100%; }
+  .lane { display: flex; flex-direction: column; align-items: center; }
+  .lane-label { font-size: 13px; font-weight: 700; padding: 4px 14px; border-radius: 999px; margin-bottom: 10px; }
+  .ok  { background: #dcfce7; color: #15803d; }
+  .bad { background: #fee2e2; color: #b91c1c; }
+  .loop-note { font-size: 12px; color: #b91c1c; margin: 8px 0; }
+
+  .legend { display:flex; gap:16px; justify-content:center; flex-wrap:wrap;
+            margin-top: 30px; font-size: 12px; color:#475569; }
+  .dot { display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:5px; }
+</style>
+
+<div class="wrap">
+  <h1>智能问数 · 流水线流程图</h1>
+  <div class="sub">一个问题从进门到出答案，经过的 12 个工位</div>
+
+  <div class="flow">
+    <div class="pill start">起点</div>
+    <div class="vline"></div><div class="tip"></div>
+
+    <div class="node c-blue">
+      <div class="en">extract_keyword</div><div class="cn">② 切关键词</div>
+    </div>
+
+    <div class="vline"></div>
+    <div class="parallel">
+      <div class="branch">
+        <div class="branch-top"></div>
+        <div class="node c-green"><div class="en">recall_column</div><div class="cn">找相关字段</div></div>
+        <div class="branch-bottom"></div>
+      </div>
+      <div class="branch">
+        <div class="branch-top"></div>
+        <div class="node c-green"><div class="en">recall_metric</div><div class="cn">找指标定义</div></div>
+        <div class="branch-bottom"></div>
+      </div>
+      <div class="branch">
+        <div class="branch-top"></div>
+        <div class="node c-green"><div class="en">recall_value</div><div class="cn">找枚举取值</div></div>
+        <div class="branch-bottom"></div>
+      </div>
+    </div>
+    <div class="manifold"></div>
+    <div class="vline"></div><div class="tip"></div>
+
+    <div class="node c-purple">
+      <div class="en">merge_recall</div><div class="cn">③ 把三路结果合并</div>
+    </div>
+
+    <div class="vline"></div>
+    <div class="parallel">
+      <div class="branch">
+        <div class="branch-top"></div>
+        <div class="node c-orange"><div class="en">filter_metric</div><div class="cn">挑要哪个指标</div></div>
+        <div class="branch-bottom"></div>
+      </div>
+      <div class="branch">
+        <div class="branch-top"></div>
+        <div class="node c-orange"><div class="en">filter_table</div><div class="cn">挑要用哪几张表</div></div>
+        <div class="branch-bottom"></div>
+      </div>
+    </div>
+    <div class="manifold" style="width:46%;"></div>
+    <div class="vline"></div><div class="tip"></div>
+
+    <div class="node c-indigo">
+      <div class="en">add_context</div><div class="cn">④ 补日期、数据库类型</div>
+    </div>
+    <div class="vline"></div><div class="tip"></div>
+
+    <div class="node c-indigo">
+      <div class="en">generate_sql</div><div class="cn">⑤ 写出 SQL</div>
+    </div>
+    <div class="vline"></div><div class="tip"></div>
+
+    <div class="node c-indigo">
+      <div class="en">validate_sql</div><div class="cn">⑥ 检查 SQL 对不对</div>
+    </div>
+
+    <div class="vline"></div>
+    <div class="fork">
+      <div class="lane">
+        <div class="lane-label ok">没出错</div>
+        <div class="branch-top"></div>
+        <div class="node c-green"><div class="en">execute_sql</div><div class="cn">执行，出结果</div></div>
+      </div>
+      <div class="lane">
+        <div class="lane-label bad">出错</div>
+        <div class="branch-top"></div>
+        <div class="node c-red"><div class="en">correct_sql</div><div class="cn">改正 SQL</div></div>
+        <div class="loop-note">改好后回到左边执行</div>
+      </div>
+    </div>
+
+    <div class="vline"></div><div class="tip"></div>
+    <div class="pill end">终点</div>
+
+    <div class="legend">
+      <span><span class="dot" style="background:#3b82f6;"></span>切词</span>
+      <span><span class="dot" style="background:#10b981;"></span>召回 / 执行</span>
+      <span><span class="dot" style="background:#8b5cf6;"></span>合并</span>
+      <span><span class="dot" style="background:#f59e0b;"></span>过滤</span>
+      <span><span class="dot" style="background:#6366f1;"></span>补背景 / 写SQL</span>
+      <span><span class="dot" style="background:#ef4444;"></span>纠错</span>
+    </div>
+  </div>
+</div>
+</html>

@@ -1,0 +1,30 @@
+# ===== Python =====
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# ===== 日志 =====
+logs/
+*.log
+
+# ===== 大模型文件（体积大，可重新下载，不入库）=====
+data-agent/docker/embedding/
+
+# ===== 敏感配置（含真实 API Key，禁止入库）=====
+data-agent/conf/app_config.yaml
+
+# ===== 前端（前端目录也有自己的 .gitignore，这里双保险）=====
+node_modules/
+dist/
+dist-ssr/
+.idea/
+
+# ===== 系统 / 编辑器临时文件 =====
+.DS_Store
+Thumbs.db
+.vscode/
+*.swp
+*.local
